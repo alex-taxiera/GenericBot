@@ -1,0 +1,18 @@
+{
+  "TOKEN": "",
+  "DB_CREDENTIALS": {
+    "database": "eris-boiler",
+    "host": "127.0.0.1",
+    "user": "root",
+    "password": ""
+  },
+  "DEFAULT": {
+    "prefix": "!",
+    "status": {
+	    "name": "Overwatch",
+	    "type": 0,
+      "default": true
+	   },
+    "rotateStatus": false
+  }
+}
