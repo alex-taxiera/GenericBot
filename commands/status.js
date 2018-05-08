@@ -17,7 +17,7 @@ module.exports = new Command({
       case 'add':
       // TODO: maybe supply type with name? maybe too complicated
         if (statuses.includes(fullParam)) return `Statuses already includes "${fullParam}"`
-        bot.dbm.addStatus(fullParam)
+        console.log(bot.dbm.addStatus(fullParam))
         return `${fullParam} added!`
       case 'del':
         if (!statuses.includes(fullParam)) return `Statuses does not include "${fullParam}"`
