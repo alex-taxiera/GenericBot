@@ -25,6 +25,7 @@
   "dependencies": {
     "colors": "^1.2.1",
     "eris": "^0.8.5",
+    "google": "^2.1.0",
     "knex": "^0.14.4",
     "moment": "^2.21.0",
     "mysql": "^2.15.0",
