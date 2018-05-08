@@ -11,7 +11,7 @@ module.exports = new Command({
     const fullParam = params.join(' ')
     google.resultsPerPage = 25
 
-    const result = asyncGoogle(fullParam)
+    const result = await asyncGoogle(fullParam)
     .then((res) => res.links.filter((link) => link.href !== null)[0].href)
     .catch((e) => undefined)
 
