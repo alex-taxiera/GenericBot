@@ -1,0 +1,38 @@
+{
+  "name": "genericbot",
+  "version": "1.0.0",
+  "description": "GenericBot is an extremely simple Discord bot implemented with my boilerplate code",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --recursive test & standard & nodemon"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex-taxiera/GenericBot.git"
+  },
+  "keywords": [
+    "generic",
+    "discord",
+    "bot",
+    "javascript"
+  ],
+  "author": "Alex Taxiera",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/alex-taxiera/GenericBot/issues"
+  },
+  "homepage": "https://github.com/alex-taxiera/GenericBot#readme",
+  "dependencies": {
+    "colors": "^1.2.1",
+    "eris": "^0.8.5",
+    "knex": "^0.14.4",
+    "moment": "^2.21.0",
+    "mysql": "^2.15.0",
+    "npm": "^5.7.1"
+  },
+  "devDependencies": {
+    "mocha": "^5.0.5",
+    "nodemon": "^1.17.2",
+    "standard": "^10.0.3"
+  }
+}
