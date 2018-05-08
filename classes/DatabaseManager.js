@@ -36,7 +36,7 @@ class DatabaseManager {
    * @return {(Number|undefined)}             Returns 0 on success or undefined.
    */
   addStatus (status) {
-    return this._insert({ table: 'statuses', data: status })
+    return this._insert({ table: 'statuses', data: { name: status } })
   }
 
   /**
