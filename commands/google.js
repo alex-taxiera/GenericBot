@@ -1,6 +1,6 @@
 const google = require('google')
 const asyncGoogle = require('util').promisify(google)
-const Command = require('./Command.js')
+const Command = require('../classes/Command.js')
 
 module.exports = new Command({
   name: 'google',
