@@ -1,1 +1,3 @@
-module.exports = console.error
+module.exports = (bot, error) => {
+  bot.logger.error(`cry ${error}`)
+}
