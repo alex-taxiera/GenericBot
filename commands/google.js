@@ -10,8 +10,11 @@ module.exports = new Command({
   run: async function ({ params }) {
     const fullParam = params.join(' ')
     google.resultsPerPage = 25
-    return asyncGoogle(fullParam)
+
+    const result = asyncGoogle(fullParam)
     .then((res) => res.links.filter((link) => link.href !== null)[0].href)
     .catch((e) => undefined)
+
+    if (result) return { content: result, delay: -1 }
   }
 })
