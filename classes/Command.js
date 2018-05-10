@@ -10,9 +10,11 @@ class Command {
    * @param {String}   data.description           The command description.
    * @param {String[]} [data.parameters=[]]       List of paremeters that the command takes.
    * @param {String}   [data.permission='Anyone'] The name of the permission required to use the command.
+   * @param {Boolean}  [deleteInvoking=true]      Whether or not the bot should delete the message that invoked this command.
+   * @param {Number}   [delay=10000]              How many miliseconds to wait before deleting the bots response.
    * @param {Function} data.run                   The command function.
    */
-  constructor ({ name, aliases, description, parameters, permission, run }) {
+  constructor ({ name, aliases, description, parameters, permission, deleteInvoking, delay, run }) {
     if (typeof name !== 'string') throw Error(`command cannot have name "${name}"`)
     if (typeof description !== 'string') throw Error(`command cannot have description "${description}"`)
     if (typeof run !== 'function') throw Error(`command cannot have run function "${run}"`)
@@ -42,6 +44,16 @@ class Command {
      * @type {String}
      */
     this.permission = permission || 'Anyone'
+    /**
+     * Whether or not the bot should delete the message that invoked this command.
+     * @type {Boolean}
+     */
+    this.deleteInvoking = deleteInvoking === undefined ? true : deleteInvoking
+    /**
+     * How many miliseconds to wait before deleting the bots response.
+     * @type {Number}
+     */
+    this.delay = delay || 10000
     /**
      * The command function.
      * @type {Function}

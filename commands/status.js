@@ -21,8 +21,7 @@ module.exports = new Command({
         return `${fullParam} added!`
       case 'del':
         if (!statuses.includes(fullParam)) return `Statuses does not include "${fullParam}"`
-        // TODO MAYBE YOU SHOULD ADD THIS YOU FUCK
-        await bot.dbm.delStatus(fullParam)
+        await bot.dbm.removeStatus(fullParam)
         return `${fullParam} deleted!`
       // TODO: edit option, change name or type
       default:

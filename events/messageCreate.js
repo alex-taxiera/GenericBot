@@ -2,18 +2,12 @@ module.exports = async (bot, msg) => {
   if (!msg.member || msg.member.id === bot.user.id) return
 
   const { prefix } = await bot.dbm.getClient(msg.channel.guild.id)
-  if (!msg.content.startsWith(prefix)) {
-    if (msg.content.toLowerCase() === 'ayy') return msg.channel.createMessage('lmao')
-    return
-  }
+  if (!msg.content.startsWith(prefix)) return
 
   const params = msg.content.substring(prefix.length).split(' ')
   const cmd = params.splice(0, 1)[0]
   const command = bot.commands.get(cmd) || bot.commands.get(bot.aliases.get(cmd))
   if (!command) return
-
-  msg.delete()
-  .catch((e) => bot.logger.warn('cannot delete messages'))
 
   if (params.length < command.parameters.length) {
     return msg.channel.createMessage(msg.author.mention + ' insufficient parameters!')
@@ -27,10 +21,11 @@ module.exports = async (bot, msg) => {
   }
   command.run({ params, bot, msg })
   .then((response) => {
+    if (command.deleteInvoking) msg.delete().catch((e) => bot.logger.warn('cannot delete messages'))
     if (!response) return
-    const { content, delay } = parseResponse(response)
+    const content = parseResponse(response)
     return msg.channel.createMessage(content)
-    .then((m) => { if (delay > 0) setTimeout(() => m.delete(), delay) })
+    .then((m) => { if (command.delay > 0) setTimeout(() => m.delete(), command.delay) })
     .catch(console.error)
   })
 }
@@ -57,13 +52,10 @@ async function allow (bot, perm, msg) {
  * @property {Object|undefined} content.embed   The embed object of the response.
  */
 function parseResponse (response) {
-  const message = {
-    delay: response.delay || 10000,
-    content: {
-      content: response.content || '',
-      embed: response.embed || undefined
-    }
+  const content = {
+    content: response.content || '',
+    embed: response.embed || undefined
   }
-  if (typeof response === 'string') message.content.content = response
-  return message
+  if (typeof response === 'string') content.content = response
+  return content
 }
