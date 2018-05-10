@@ -2,7 +2,10 @@ module.exports = async (bot, msg) => {
   if (!msg.member || msg.member.id === bot.user.id) return
 
   const { prefix } = await bot.dbm.getClient(msg.channel.guild.id)
-  if (!msg.content.startsWith(prefix)) return
+  if (!msg.content.startsWith(prefix)) {
+    if (msg.content.toLowerCase() === 'ayy') return msg.channel.createMessage('lmao')
+    return
+  }
 
   const params = msg.content.substring(prefix.length).split(' ')
   const cmd = params.splice(0, 1)[0]
