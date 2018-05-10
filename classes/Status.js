@@ -47,7 +47,7 @@ class Status {
    * @param {Number} [status.type=0] Type of status. 0 is playing, 1 is streaming (Twitch only [Unsupported]), 2 is listening, 3 is watching.
    */
   async setStatus (bot, status) {
-    if (!status.name) {
+    if (!status) {
       status = this.current
       const statuses = await bot.dbm.getStatuses()
       if (statuses.length > 1) {
