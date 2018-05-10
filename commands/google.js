@@ -4,7 +4,7 @@ const Command = require('../classes/Command.js')
 
 module.exports = new Command({
   name: 'google',
-  aliases: ['search', 'bing'],
+  aliases: ['search', 'bing', 'g'],
   description: 'Google something!',
   parameters: ['query'],
   deleteInvoking: false,
