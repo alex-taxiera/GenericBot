@@ -7,6 +7,8 @@ module.exports = new Command({
   aliases: ['search', 'bing'],
   description: 'Google something!',
   parameters: ['query'],
+  deleteInvoking: false,
+  delay: -1,
   run: async function ({ params }) {
     const fullParam = params.join(' ')
     google.resultsPerPage = 25
