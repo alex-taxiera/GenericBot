@@ -1,8 +1,15 @@
 const Command = require('../classes/Command.js')
 
-module.exports = new Command({
-  name: 'lenny',
-  description: '( ͡° ͜ʖ ͡° )',
-  delay: -1,
-  run: async () => '( ͡° ͜ʖ ͡° )'
-})
+module.exports = (bot) => {
+  return new Command(
+    bot,
+    {
+      name: 'lenny',
+      description: '( ͡° ͜ʖ ͡° )',
+      options: {
+        deleteResponse: false
+      },
+      run: async () => '( ͡° ͜ʖ ͡° )'
+    }
+  )
+}
