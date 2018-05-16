@@ -1,4 +1,7 @@
 /**
+ * @external {Collection} https://abal.moe/Eris/docs/Collection
+ */
+/**
  * Class representing a database manager.
  */
 class DatabaseManager {
@@ -30,13 +33,12 @@ class DatabaseManager {
 
   /**
    * Insert a status into the statuses table.
-   * @param  {Object|String}      status          The status to add
-   * @param  {String}             [status.name]   The name of the status.
-   * @param  {Number}             [status.type=1] The type of the status.
-   * @return {(Number|undefined)}                 Returns 0 on success or undefined.
+   * @param  {Object}             status      The status to make default.
+   * @param  {String}             status.name The name of the status.
+   * @param  {Number}             status.type The type of the status.
+   * @return {(Number|undefined)}             Returns 0 on success or undefined.
    */
   addStatus (status) {
-    if (typeof status === 'string') status = { name: status }
     return this._insert({ table: 'statuses', data: status })
   }
 
@@ -97,6 +99,54 @@ class DatabaseManager {
    */
   removeStatus (name) {
     return this._delete({ table: 'statuses', where: { name } })
+  }
+
+  /**
+   * Setup database tables.
+   * @param  {DataClient} bot The bot client.
+   * @return {Promise[]}      The results of the table creation.
+   */
+  async setup (bot) {
+    const tables = []
+    tables.push(this._knex.schema.hasTable('guild_settings')
+      .then((exists) => {
+        if (exists) return
+        return this._knex.schema.createTable('guild_settings', (table) => {
+          table.charset('utf8')
+          table.string('id').primary()
+          table.string('vip')
+          table.string('prefix').defaultTo(bot.config.DEFAULT.prefix)
+        })
+      })
+    )
+
+    tables.push(this._knex.schema.hasTable('guild_toggles')
+      .then((exists) => {
+        if (exists) return
+        return this._knex.schema.createTable('guild_toggles', (table) => {
+          table.charset('utf8')
+          table.string('id').primary()
+          // add toggleable values
+        })
+      })
+    )
+
+    tables.push(this._knex.schema.hasTable('statuses')
+      .then((exists) => {
+        if (exists) return
+        return this._knex.schema.createTable('statuses', (table) => {
+          table.charset('utf8')
+          table.string('name').primary()
+          table.integer('type').defaultTo(0)
+          table.boolean('default').defaultTo('false')
+        })
+        .then(() => {
+          this._insert({ table: 'statuses', data: bot.config.DEFAULT.status })
+        })
+      })
+    )
+
+    return Promise.all(tables)
   }
 
   /**
