@@ -1,7 +1,7 @@
 {
   "TOKEN": "",
   "DB_CREDENTIALS": {
-    "database": "eris-boiler",
+    "database": "GenericBot",
     "host": "127.0.0.1",
     "user": "root",
     "password": ""
