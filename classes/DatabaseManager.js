@@ -30,12 +30,13 @@ class DatabaseManager {
 
   /**
    * Insert a status into the statuses table.
-   * @param  {Object}             status      The status to make default.
-   * @param  {String}             status.name The name of the status.
-   * @param  {Number}             status.type The type of the status.
-   * @return {(Number|undefined)}             Returns 0 on success or undefined.
+   * @param  {Object|String}      status          The status to add
+   * @param  {String}             [status.name]   The name of the status.
+   * @param  {Number}             [status.type=1] The type of the status.
+   * @return {(Number|undefined)}                 Returns 0 on success or undefined.
    */
   addStatus (status) {
+    if (typeof status === 'string') status = { name: status }
     return this._insert({ table: 'statuses', data: status })
   }
 
