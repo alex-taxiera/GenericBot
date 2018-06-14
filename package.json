@@ -1,6 +1,6 @@
 {
   "name": "genericbot",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "GenericBot is an extremely simple Discord bot implemented with my boilerplate code",
   "main": "./src/index.js",
   "scripts": {
