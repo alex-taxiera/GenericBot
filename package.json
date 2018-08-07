@@ -2,9 +2,9 @@
   "name": "genericbot",
   "version": "2.0.1",
   "description": "GenericBot is an extremely simple Discord bot implemented with my boilerplate code",
-  "main": "./src/index.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node ./src/index.js"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -24,11 +24,11 @@
   "homepage": "https://github.com/alex-taxiera/GenericBot#readme",
   "dependencies": {
     "colors": "^1.2.1",
+    "dotenv": "^6.0.0",
     "eris": "^0.8.5",
+    "eris-boiler": "github:alex-taxiera/eris-boiler#beta",
     "google": "^2.1.0",
-    "knex": "^0.14.4",
     "moment": "^2.21.0",
-    "mysql": "^2.15.0",
     "npm": "^5.7.1"
   },
   "devDependencies": {
