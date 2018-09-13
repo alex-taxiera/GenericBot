@@ -23,13 +23,9 @@
   },
   "homepage": "https://github.com/alex-taxiera/GenericBot#readme",
   "dependencies": {
-    "colors": "^1.2.1",
     "dotenv": "^6.0.0",
-    "eris": "^0.8.5",
-    "eris-boiler": "github:alex-taxiera/eris-boiler#beta",
-    "google": "^2.1.0",
-    "moment": "^2.21.0",
-    "npm": "^5.7.1"
+    "eris-boiler": "^3.0.0-beta.3",
+    "google": "^2.1.0"
   },
   "devDependencies": {
     "standard": "^10.0.3"
