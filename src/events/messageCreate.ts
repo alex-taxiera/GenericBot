@@ -1,8 +1,10 @@
-const { Event } = require('eris-boiler')
+import {
+  DiscordEvent
+} from 'eris-boiler'
 
-module.exports = new Event({
+export default new DiscordEvent({
   name: 'messageCreate',
-  run: async (bot, msg) => {
+  run: (_, msg): void => {
     if (msg.content.toLowerCase() === 'ayy') {
       msg.channel.createMessage('lmao')
     }
