@@ -1,5 +1,7 @@
 import { join } from 'path'
-
+import {
+  load
+} from 'docker-secret-env'
 import {
   DataClient
 } from 'eris-boiler'
@@ -9,11 +11,12 @@ import {
   statusManagerOptions
 } from './config'
 
+load()
 if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config()
 }
 
-const bot = new DataClient(process.env.GB_TOKEN ?? '', {
+const bot = new DataClient(process.env.DISCORD_TOKEN ?? '', {
   oratorOptions,
   statusManagerOptions
 })
