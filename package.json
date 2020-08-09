@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@types/node": "~12.12.54",
+    "docker-secret-env": "^0.2.1",
     "eris-boiler": "^3.1.0-beta.0",
     "ts-node": "^8.10.2",
     "tsconfig-paths": "^3.9.0",
