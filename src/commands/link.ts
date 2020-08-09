@@ -23,7 +23,7 @@ export default new GuildCommand({
         msg.channel.guild.id === inviteOptions.guildId
     })
   },
-  run: (_, { msg }): CommandResults => {
+  run: (_, { msg }): Promise<CommandResults> | CommandResults => {
     const channel = msg.channel.guild.channels
       .find((ch) => ch.name === inviteOptions.channelName)
     if (!channel) {
