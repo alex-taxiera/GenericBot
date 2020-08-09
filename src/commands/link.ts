@@ -4,13 +4,10 @@ import {
   Permission,
   DataClient,
   GuildCommandContext,
-  CommandData
+  CommandData,
 } from 'eris-boiler'
 import * as logger from 'eris-boiler/util/logger'
-
-import {
-  inviteOptions
-} from '../config'
+import config from 'config'
 
 export default new GuildCommand({
   name: 'link',
@@ -20,12 +17,12 @@ export default new GuildCommand({
       level: Infinity,
       reason: '',
       run: (_, { msg }): boolean =>
-        msg.channel.guild.id === inviteOptions.guildId
-    })
+        msg.channel.guild.id === config.get('inviteOptions.guildId'),
+    }),
   },
   run: (_, { msg }): Promise<CommandResults> | CommandResults => {
     const channel = msg.channel.guild.channels
-      .find((ch) => ch.name === inviteOptions.channelName)
+      .find((ch) => ch.name === config.get('inviteOptions.channelName'))
     if (!channel) {
       return 'missing channel, homeslice'
     }
@@ -35,12 +32,12 @@ export default new GuildCommand({
 
     return channel.createInvite({
       maxAge: 24 * 60 * 60,
-      maxUses: 1
+      maxUses: 1,
     }, `Created for ${msg.author.id}`)
       .then((invite) => `discord.gg/${invite.code}`)
       .catch(() => {
         logger.warn(`COULD NOT CREATE INVITE FOR ${channel.guild.id}`)
         return 'error bro, sorry'
       })
-  }
+  },
 } as CommandData<DataClient, GuildCommandContext>)

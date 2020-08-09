@@ -1,8 +1,8 @@
 import {
-  Message
+  Message,
 } from 'eris'
 import {
-  DiscordEvent
+  DiscordEvent,
 } from 'eris-boiler'
 
 export default new DiscordEvent({
@@ -11,5 +11,5 @@ export default new DiscordEvent({
     if (msg.content.toLowerCase() === 'ayy') {
       msg.channel.createMessage('lmao').catch(() => undefined)
     }
-  }
+  },
 })

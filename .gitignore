@@ -54,12 +54,9 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file
-.env
-
 # project
 .jsdoc.json
 .esdoc.json
 custom-css.css
-config.json
+*local.yml
 dist

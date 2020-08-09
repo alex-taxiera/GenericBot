@@ -1,22 +1,18 @@
 name: Publish
 
 on:
-  push:
-    branches:
-      - master
-      - dev
+  repository_dispatch:
+    types: [release]
 
 jobs:
-  run:
+  push_to_docker_hub:
+    name: Push to Docker Hub
     runs-on: ubuntu-latest
     steps:
       -
         uses: actions/checkout@master
-      -
-        name: Extract branch name
-        shell: bash
-        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
-        id: extract_branch
+        with:
+          ref: ${{ github.event.client_payload.ref }}
       -
         name: Generate Build Number
         id: buildnumber
@@ -28,6 +24,6 @@ jobs:
         uses: elgohr/Publish-Docker-Github-Action@master
         with:
           name: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.REPO }}
-          tags: "${{ secrets.NAME }},${{ secrets.NAME }}-${{ steps.buildnumber.outputs.build_number }},${{ secrets.NAME }}-${{ steps.extract_branch.outputs.branch }},${{ secrets.NAME }}-${{ steps.extract_branch.outputs.branch }}-${{ steps.buildnumber.outputs.build_number }}"
+          tags: "${{ secrets.NAME }},${{ secrets.NAME }}-${{ steps.buildnumber.outputs.build_number }},${{ secrets.NAME }}-${{ github.event.client_payload.branch }}"
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}

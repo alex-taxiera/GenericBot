@@ -1,14 +1,19 @@
 import {
   Command,
-  CommandResults
+  CommandResults,
 } from 'eris-boiler'
 
 export default new Command({
   name: 'raise',
   description: 'raise your blank',
-  run: (_, { params }): CommandResults => {
+  run: (_, { params, msg }): CommandResults => {
     const fullParam = params.join(' ').toLowerCase()
 
-    return `ヽ༼ຈل͜ຈ༽ﾉ raise your ${fullParam} ヽ༼ຈل͜ຈ༽ﾉ`
-  }
+    return {
+      content: `ヽ༼ຈل͜ຈ༽ﾉ raise your ${fullParam} ヽ༼ຈل͜ຈ༽ﾉ`,
+      webhook: true,
+      avatarURL: msg.author.avatarURL,
+      username: msg.author.username,
+    }
+  },
 })

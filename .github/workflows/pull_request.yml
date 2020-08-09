@@ -1,6 +1,8 @@
 name: PR
 
-on: [pull_request]
+on:
+  - push
+  - pull_request
 
 jobs:
   compile:
@@ -44,3 +46,21 @@ jobs:
         run: npm ci
       -
         run: npm run lint
+
+  trigger_release:
+    name: Trigger Release
+    needs: [compile, lint]
+    if: github.event == 'push'
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Extract branch name
+        shell: bash
+        run: echo "##[set-output name=branch;]$(echo ${GITHUB_REF#refs/heads/})"
+        id: extract_branch
+      -
+        uses: peter-evans/repository-dispatch@v1
+        with:
+          token: ${{ secrets.github_token }}
+          event-type: release
+          client-payload: '{"ref": "${{ github.ref }}", "branch": "${{ steps.extract_branch.outputs.branch }}"}'

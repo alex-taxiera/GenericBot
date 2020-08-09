@@ -1,27 +1,18 @@
 import { join } from 'path'
-import {
-  load
-} from 'docker-secret-env'
+
+import config from 'config'
 import {
   DataClient
 } from 'eris-boiler'
 
-import {
-  oratorOptions,
-  statusManagerOptions
-} from './config'
-
-load()
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config()
-}
-
-const bot = new DataClient(process.env.DISCORD_TOKEN ?? '', {
-  oratorOptions,
-  statusManagerOptions
+const bot = new DataClient(config.get('DISCORD_TOKEN'), {
+  oratorOptions: config.get('oratorOptions'),
+  statusManagerOptions: config.get('statusManagerOptions')
 })
 
 bot
   .addCommands(join(__dirname, 'commands'))
   .addEvents(join(__dirname, 'events'))
   .connect()
+  // eslint-disable-next-line no-console
+  .catch(console.error)

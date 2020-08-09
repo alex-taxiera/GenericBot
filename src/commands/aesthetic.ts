@@ -1,6 +1,6 @@
 import {
   Command,
-  CommandResults
+  CommandResults,
 } from 'eris-boiler'
 
 function goodChar (charCode: number): boolean {
@@ -10,7 +10,7 @@ function goodChar (charCode: number): boolean {
 export default new Command({
   name: 'aesthetic',
   description: 'make your text *ａｅｓｔｈｅｔｉｃ*',
-  run: (_, { params }): CommandResults => {
+  run: (_, { params, msg }): CommandResults => {
     const fullParam = params.join(' ')
     let str = ''
     for (let i = 0; i < fullParam.length; i++) {
@@ -21,6 +21,11 @@ export default new Command({
         str += fullParam[i]
       }
     }
-    return `*${str}*`
-  }
+    return {
+      content: `*${str}*`,
+      webhook: true,
+      avatarURL: msg.author.avatarURL,
+      username: msg.author.username,
+    }
+  },
 })

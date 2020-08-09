@@ -1,0 +1,13 @@
+oratorOptions:
+  defaultPrefix: '>'
+
+statusManagerOptions:
+  defaultStatus:
+    name: himself
+    type: 0
+
+inviteOptions:
+  guildId: '165265939389087744'
+  channelName: info
+
+NODE_ENV: development

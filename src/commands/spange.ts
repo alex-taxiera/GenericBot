@@ -1,6 +1,6 @@
 import {
   Command,
-  CommandResults
+  CommandResults,
 } from 'eris-boiler'
 
 function badChar (charCode: number): boolean {
@@ -16,8 +16,11 @@ function tooClose (indices: Array<number>, index: number): boolean {
 export default new Command({
   name: 'spange',
   description: 'MaKe yOur tExT sPanGe',
-  run: (_, { params }): CommandResults => {
-    return params.map((param) => {
+  run: (_, { params, msg }): CommandResults => ({
+    webhook: true,
+    avatarURL: msg.author.avatarURL,
+    username: msg.author.username,
+    content: params.map((param) => {
       param = param.toLowerCase()
       if (param.split('').every((ch) => badChar(ch.charCodeAt(0)))) {
         return param
@@ -44,6 +47,6 @@ export default new Command({
         }
       }
       return str
-    }).join(' ')
-  }
+    }).join(' '),
+  }),
 })
