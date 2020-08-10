@@ -16,6 +16,9 @@ function tooClose (indices: Array<number>, index: number): boolean {
 export default new Command({
   name: 'spange',
   description: 'MaKe yOur tExT sPanGe',
+  options: {
+    deleteInvoking: true,
+  },
   run: (_, { params, msg }): CommandResults => ({
     webhook: true,
     avatarURL: msg.author.avatarURL,

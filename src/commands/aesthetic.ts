@@ -10,6 +10,9 @@ function goodChar (charCode: number): boolean {
 export default new Command({
   name: 'aesthetic',
   description: 'make your text *ａｅｓｔｈｅｔｉｃ*',
+  options: {
+    deleteInvoking: true,
+  },
   run: (_, { params, msg }): CommandResults => {
     const fullParam = params.join(' ')
     let str = ''

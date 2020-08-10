@@ -6,6 +6,9 @@ import {
 export default new Command({
   name: 'raise',
   description: 'raise your blank',
+  options: {
+    deleteInvoking: true,
+  },
   run: (_, { params, msg }): CommandResults => {
     const fullParam = params.join(' ').toLowerCase()
 
