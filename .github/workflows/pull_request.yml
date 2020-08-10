@@ -61,6 +61,6 @@ jobs:
       -
         uses: peter-evans/repository-dispatch@v1
         with:
-          token: ${{ secrets.github_token }}
+          token: ${{ secrets.PAT }}
           event-type: release
           client-payload: '{"ref": "${{ github.ref }}", "branch": "${{ steps.extract_branch.outputs.branch }}"}'
