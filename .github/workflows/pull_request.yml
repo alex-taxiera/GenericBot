@@ -5,8 +5,9 @@ on:
   - pull_request
 
 jobs:
-  compile:
-    name: Compile
+
+  install:
+    name: Install Dependencies
     runs-on: ubuntu-latest
     steps:
       -
@@ -21,13 +22,32 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      -
+      - 
         run: npm ci
+
+  compile:
+    name: Compile
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+      -
+        uses: actions/checkout@master
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.x'
+      -
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       -
         run: npx tsc
 
   lint:
     name: Lint
+    needs: [install]
     runs-on: ubuntu-latest
     steps:
       -
@@ -42,8 +62,6 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
             ${{ runner.os }}-node-
-      -
-        run: npm ci
       -
         run: npm run lint
 
