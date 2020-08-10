@@ -8,60 +8,93 @@ jobs:
 
   install:
     name: Install Dependencies
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        node-version:
+          - 12.x
+    runs-on: ${{ matrix.os }}
     steps:
       -
         uses: actions/checkout@master
       - uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: ${{ matrix.node-version }}
       -
-        uses: actions/cache@v1
+        uses: actions/cache@v1.1.2
+        env:
+          cache-name: cache-node-modules
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: '**/node_modules'
+          key: ${{ matrix.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-${{ matrix.node-version }}-build-
+            ${{ runner.os }}-${{ matrix.node-version }}-
+            ${{ runner.os }}-
       - 
         run: npm ci
 
   compile:
     name: Compile
     needs: [install]
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        node-version:
+          - 12.x
+    runs-on: ${{ matrix.os }}
     steps:
       -
         uses: actions/checkout@master
       - uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: ${{ matrix.node-version }}
       -
-        uses: actions/cache@v1
+        uses: actions/cache@v1.1.2
+        env:
+          cache-name: cache-node-modules
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: '**/node_modules'
+          key: ${{ matrix.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-${{ matrix.node-version }}-build-
+            ${{ runner.os }}-${{ matrix.node-version }}-
+            ${{ runner.os }}-
       -
         run: npx tsc
 
   lint:
     name: Lint
     needs: [install]
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        node-version:
+          - 12.x
+    runs-on: ${{ matrix.os }}
     steps:
       -
         uses: actions/checkout@master
       - uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: '${{ matrix.node-version }}'
       -
-        uses: actions/cache@v1
+        uses: actions/cache@v1.1.2
+        env:
+          cache-name: cache-node-modules
         with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          path: '**/node_modules'
+          key: ${{ matrix.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-${{ matrix.node-version }}-build-
+            ${{ runner.os }}-${{ matrix.node-version }}-
+            ${{ runner.os }}-
       -
         run: npm run lint
 
@@ -69,7 +102,13 @@ jobs:
     name: Trigger Release
     needs: [compile, lint]
     if: github.event_name == 'push'
-    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        os:
+          - ubuntu-latest
+        node-version:
+          - 12.x
+    runs-on: ${{ matrix.os }}
     steps:
       -
         name: Extract branch name
