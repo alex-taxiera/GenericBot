@@ -34,11 +34,8 @@ jobs:
             ~/.npm
           key: ${{ matrix.os }}_node-${{ matrix.node-version }}_${{ hashFiles('**/package-lock.json') }}
       -
-        shell: bash
-        run: echo ${{ steps.deps.cache-hit }}
-      -
         name: npm ci
-        if: steps.deps.cache-hit == false
+        if: steps.deps.outputs.cache-hit == 'false'
         run: npm ci
 
   compile:
