@@ -26,6 +26,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       -
         name: Dependency Cache
+        id: deps
         uses: actions/cache@v2
         with:
           path: |
@@ -34,6 +35,7 @@ jobs:
           key: ${{ matrix.os }}_node-${{ matrix.node-version }}_${{ hashFiles('**/package-lock.json') }}
       -
         name: npm ci
+        if: steps.deps.outputs.cache-hit == 'false'
         run: npm ci
 
   compile:
@@ -85,7 +87,7 @@ jobs:
         name: Setup Node.JS
         uses: actions/setup-node@v1
         with:
-          node-version: '${{ matrix.node-version }}'
+          node-version: ${{ matrix.node-version }}
       -
         name: Dependency Cache
         uses: actions/cache@v2
