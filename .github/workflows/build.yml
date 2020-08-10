@@ -1,4 +1,4 @@
-name: PR
+name: Build
 
 on:
   - push
@@ -22,17 +22,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       -
-        uses: actions/cache@v1.1.2
-        env:
-          cache-name: cache-node-modules
+        uses: actions/cache@v2
         with:
-          path: '**/node_modules'
-          key: ${{ matrix.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-${{ matrix.node-version }}-build-
-            ${{ runner.os }}-${{ matrix.node-version }}-
-            ${{ runner.os }}-
+          path: |
+            **/node_modules
+            ~/.npm
+          key: ${{ matrix.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
       - 
         run: npm ci
 
@@ -53,17 +48,12 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       -
-        uses: actions/cache@v1.1.2
-        env:
-          cache-name: cache-node-modules
+        uses: actions/cache@v2
         with:
-          path: '**/node_modules'
-          key: ${{ matrix.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-${{ matrix.node-version }}-build-
-            ${{ runner.os }}-${{ matrix.node-version }}-
-            ${{ runner.os }}-
+          path: |
+            **/node_modules
+            ~/.npm
+          key: ${{ matrix.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
       -
         run: npx tsc
 
@@ -84,21 +74,16 @@ jobs:
         with:
           node-version: '${{ matrix.node-version }}'
       -
-        uses: actions/cache@v1.1.2
-        env:
-          cache-name: cache-node-modules
+        uses: actions/cache@v2
         with:
-          path: '**/node_modules'
-          key: ${{ matrix.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-${{ matrix.node-version }}-build-${{ env.cache-name }}-
-            ${{ runner.os }}-${{ matrix.node-version }}-build-
-            ${{ runner.os }}-${{ matrix.node-version }}-
-            ${{ runner.os }}-
+          path: |
+            **/node_modules
+            ~/.npm
+          key: ${{ matrix.os }}-node-${{ matrix.node-version }}-${{ hashFiles('**/package-lock.json') }}
       -
         run: npm run lint
 
-  trigger_release:
+  release:
     name: Trigger Release
     needs: [compile, lint]
     if: github.event_name == 'push'
@@ -106,8 +91,6 @@ jobs:
       matrix:
         os:
           - ubuntu-latest
-        node-version:
-          - 12.x
     runs-on: ${{ matrix.os }}
     steps:
       -
