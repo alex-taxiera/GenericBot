@@ -64,7 +64,7 @@ jobs:
           path: |
             **/node_modules
             ~/.npm
-          key: ${{ matrix.os }}_node-${{ matrix.node-version }}_${{ hashFiles('**/package-lock.json') }}
+          key: ${{ matrix.os }}_node-v${{ matrix.node-version }}_${{ hashFiles('**/package-lock.json') }}
       -
         name: npx tsc
         run: npx tsc
@@ -95,7 +95,7 @@ jobs:
           path: |
             **/node_modules
             ~/.npm
-          key: ${{ matrix.os }}_node-${{ matrix.node-version }}_${{ hashFiles('**/package-lock.json') }}
+          key: ${{ matrix.os }}_node-v${{ matrix.node-version }}_${{ hashFiles('**/package-lock.json') }}
       -
         name: npm run lint
         run: npm run lint
