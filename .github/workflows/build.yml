@@ -32,7 +32,7 @@ jobs:
           path: |
             **/node_modules
             ~/.npm
-          key: ${{ matrix.os }}_node-${{ matrix.node-version }}_${{ hashFiles('**/package-lock.json') }}
+          key: ${{ matrix.os }}_node-v${{ matrix.node-version }}_${{ hashFiles('**/package-lock.json') }}
       -
         name: npm ci
         if: steps.deps.outputs.cache-hit != 'true'
