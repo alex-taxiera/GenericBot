@@ -102,11 +102,7 @@ jobs:
     name: Trigger Release
     needs: [compile, lint]
     if: github.event_name == 'push'
-    strategy:
-      matrix:
-        os:
-          - ubuntu-latest
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
     steps:
       -
         name: Extract Branch Name
