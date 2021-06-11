@@ -1,8 +1,8 @@
 import {
-  load,
-} from 'docker-secret-env'
+  config,
+} from 'dotenv'
 
-load()
+config()
 
 export default {
   ...process.env,

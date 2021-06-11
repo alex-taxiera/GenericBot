@@ -60,3 +60,4 @@ typings/
 custom-css.css
 *local.yml
 dist
+.env

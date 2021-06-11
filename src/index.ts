@@ -2,7 +2,7 @@ import { join } from 'path'
 
 import config from 'config'
 import {
-  DataClient
+  DataClient,
 } from 'eris-boiler'
 
 const bot = new DataClient(config.get('DISCORD_TOKEN'), {
