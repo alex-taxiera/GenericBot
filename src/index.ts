@@ -7,7 +7,7 @@ import {
 
 const bot = new DataClient(config.get('DISCORD_TOKEN'), {
   oratorOptions: config.get('oratorOptions'),
-  statusManagerOptions: config.get('statusManagerOptions')
+  statusManagerOptions: config.get('statusManagerOptions'),
 })
 
 bot
