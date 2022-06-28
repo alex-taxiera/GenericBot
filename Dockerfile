@@ -1,9 +1,10 @@
-FROM node:12-alpine
+FROM node:16-alpine
 
-RUN apk add --no-cache git; mkdir -p /eli
+RUN mkdir -p /eli
 WORKDIR /eli
 
+COPY package.json package-lock.json ./
+RUN npm ci --no-optional --only=prod --ignore-scripts
 COPY . .
-RUN npm ci --no-optional --only=prod
 
 CMD ["npm", "start"]
