@@ -6,7 +6,6 @@ function goodChar (charCode: number): boolean {
 
 const command: TopLevelCommand = {
   type: 1,
-  guildId: '436591833196265473',
   name: 'aesthetic',
   description: 'make your text *ａｅｓｔｈｅｔｉｃ*',
   options: [

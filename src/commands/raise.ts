@@ -2,7 +2,6 @@ import { TopLevelCommand } from '@hephaestus/eris'
 
 const command: TopLevelCommand = {
   type: 1,
-  guildId: '436591833196265473',
   name: 'raise',
   description: 'raise your blank',
   options: [

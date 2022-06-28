@@ -12,7 +12,6 @@ function tooClose (indices: number[], index: number): boolean {
 
 const command: TopLevelCommand = {
   type: 1,
-  guildId: '436591833196265473',
   name: 'spange',
   description: 'MaKe yOur tExT sPanGe',
   options: [
