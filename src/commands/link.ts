@@ -1,43 +1,21 @@
-import {
-  GuildCommand,
-  CommandResults,
-  Permission,
-  DataClient,
-  GuildCommandContext,
-  CommandData,
-} from 'eris-boiler'
-import * as logger from 'eris-boiler/util/logger'
+import { TopLevelCommand } from '@hephaestus/eris'
 import config from 'config'
 
-export default new GuildCommand({
+const command: TopLevelCommand = {
+  type: 1,
+  guildId: config.get('inviteOptions.guildId'),
   name: 'link',
   description: 'Generate a single use, 24hr invite link for the server',
-  options: {
-    permission: new Permission<DataClient, GuildCommandContext>({
-      level: Infinity,
-      reason: '',
-      run: (_, { msg }): boolean =>
-        msg.channel.guild.id === config.get('inviteOptions.guildId'),
-    }),
-  },
-  run: (_, { msg }): Promise<CommandResults> | CommandResults => {
-    const channel = msg.channel.guild.channels
-      .find((ch) => ch.name === config.get('inviteOptions.channelName'))
-    if (!channel) {
-      return 'missing channel, homeslice'
-    }
-    if (channel.type !== 0 && channel.type !== 5 && channel.type !== 2) {
-      return 'bad channel, my dude'
-    }
+  action: async (interaction, client) => {
+    const invite = await client.createChannelInvite(
+      config.get('inviteOptions.channelId'),
+      {
+        maxAge: 24 * 60 * 60,
+        maxUses: 1,
+      }, `Created for ${interaction.member?.id ?? ''}`)
 
-    return channel.createInvite({
-      maxAge: 24 * 60 * 60,
-      maxUses: 1,
-    }, `Created for ${msg.author.id}`)
-      .then((invite) => `discord.gg/${invite.code}`)
-      .catch(() => {
-        logger.warn(`COULD NOT CREATE INVITE FOR ${channel.guild.id}`)
-        return 'error bro, sorry'
-      })
+    void interaction.createMessage(`discord.gg/${invite.code}`)
   },
-} as CommandData<DataClient, GuildCommandContext>)
+}
+
+export default command

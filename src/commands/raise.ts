@@ -1,22 +1,27 @@
-import {
-  Command,
-  CommandResults,
-} from 'eris-boiler'
+import { TopLevelCommand } from '@hephaestus/eris'
 
-export default new Command({
+const command: TopLevelCommand = {
+  type: 1,
+  guildId: '436591833196265473',
   name: 'raise',
   description: 'raise your blank',
-  options: {
-    deleteInvoking: true,
-  },
-  run: (_, { params, msg }): CommandResults => {
-    const fullParam = params.join(' ').toLowerCase()
+  options: [
+    {
+      type: 3,
+      name: 'text',
+      description: 'the text to raise',
+      required: true,
+    },
+  ],
+  action: (interaction) => {
+    const fullParam = interaction.data.options
+      ?.find(({ name }) => name === 'text')
 
-    return {
-      content: `ヽ༼ຈل͜ຈ༽ﾉ raise your ${fullParam} ヽ༼ຈل͜ຈ༽ﾉ`,
-      webhook: true,
-      avatarURL: msg.author.avatarURL,
-      username: msg.author.username,
+    if (fullParam?.type === 3) {
+      void interaction
+        .createMessage(`ヽ༼ຈل͜ຈ༽ﾉ raise your ${fullParam.value} ヽ༼ຈل͜ຈ༽ﾉ`)
     }
   },
-})
+}
+
+export default command

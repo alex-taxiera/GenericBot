@@ -1,34 +1,39 @@
-import {
-  Command,
-  CommandResults,
-} from 'eris-boiler'
+import { TopLevelCommand } from '@hephaestus/eris'
 
 function goodChar (charCode: number): boolean {
   return charCode < 127 && charCode !== 32
 }
 
-export default new Command({
+const command: TopLevelCommand = {
+  type: 1,
+  guildId: '436591833196265473',
   name: 'aesthetic',
   description: 'make your text *ａｅｓｔｈｅｔｉｃ*',
-  options: {
-    deleteInvoking: true,
-  },
-  run: (_, { params, msg }): CommandResults => {
-    const fullParam = params.join(' ')
-    let str = ''
-    for (let i = 0; i < fullParam.length; i++) {
-      const charCode = fullParam.charCodeAt(i)
-      if (goodChar(charCode)) {
-        str += String.fromCharCode((charCode + 65248))
-      } else {
-        str += fullParam[i]
+  options: [
+    {
+      type: 3,
+      name: 'text',
+      description: 'the text to aestheticize',
+      required: true,
+    },
+  ],
+  action: (interaction) => {
+    const fullParam = interaction.data.options
+      ?.find(({ name }) => name === 'text')
+
+    if (fullParam?.type === 3) {
+      let str = ''
+      for (let i = 0; i < fullParam.value.length; i++) {
+        const charCode = fullParam.value.charCodeAt(i)
+        if (goodChar(charCode)) {
+          str += String.fromCharCode((charCode + 65248))
+        } else {
+          str += fullParam.value[i]
+        }
       }
-    }
-    return {
-      content: `*${str}*`,
-      webhook: true,
-      avatarURL: msg.author.avatarURL,
-      username: msg.author.username,
+      void interaction.createMessage(`*${str}*`)
     }
   },
-})
+}
+
+export default command

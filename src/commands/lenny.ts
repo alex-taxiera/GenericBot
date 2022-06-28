@@ -1,18 +1,12 @@
-import {
-  Command,
-  CommandResults,
-} from 'eris-boiler'
+import { TopLevelCommand } from '@hephaestus/eris'
 
-export default new Command({
+const command: TopLevelCommand = {
+  type: 1,
+  guildId: '436591833196265473',
   name: 'lenny',
   description: '( ͡° ͜ʖ ͡° )',
-  options: {
-    deleteInvoking: true,
-  },
-  run: (_, { msg }): CommandResults => ({
-    content: '( ͡° ͜ʖ ͡° )',
-    webhook: true,
-    avatarURL: msg.author.avatarURL,
-    username: msg.author.username,
-  }),
-})
+  action: async (interaction) =>
+    await interaction.createMessage('( ͡° ͜ʖ ͡° )'),
+}
+
+export default command

@@ -1,15 +1,16 @@
-import {
-  Message,
-} from 'eris'
-import {
-  DiscordEvent,
-} from 'eris-boiler'
+import { Event } from '@hephaestus/eris'
 
-export default new DiscordEvent({
+import { client } from '@client'
+
+const event: Event = {
   name: 'messageCreate',
-  run: (_, msg: Message): void => {
-    if (msg.content.toLowerCase() === 'ayy') {
-      msg.channel.createMessage('lmao').catch(() => undefined)
+  handler: (message) => {
+    if (message.content.toLowerCase() === 'ayy') {
+      client.client
+        .createMessage(message.channel.id, 'lmao')
+        .catch(() => undefined)
     }
   },
-})
+}
+
+export default event

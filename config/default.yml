@@ -8,6 +8,6 @@ statusManagerOptions:
 
 inviteOptions:
   guildId: '165265939389087744'
-  channelName: info
+  channelId: '277471290950942721'
 
 NODE_ENV: development
